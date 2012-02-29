@@ -2,8 +2,14 @@
 	"name": "Tilt",
 	"version": "0.1",
 	"description": "Scroll web pages by moving your computer, not your mouse.",
+	"icons": {
+		"48": "icons/tilt-48.png",
+		"128": "icons/tilt-128.png"
+	},
 	"background_page": "background.html",
-	"browser_action": {},
+	"browser_action": {
+		"default_icon": "icons/tilt-disabled-19.png"
+	},
 	"content_scripts": [
 		{
 			"matches": [ "<all_urls>" ],
