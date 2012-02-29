@@ -1,0 +1,16 @@
+# Tilt
+
+Born at [Hacker School](http://www.hackerschool.com/)
+
+## Scroll web pages without lifting a finger (lift your laptop instead)
+
+Tilt is a Chrome extension that lets you scoll web pages by tilting your accelerometer-equipped laptop forward and backward. It was inspired by the tilt scrolling feature of Instapaper (which I hear is also in Chrome for Android).
+
+## How’s it doing?
+
+Not bad, but not ready for prime time yet. I started working on it yesterday. Here’s my todo list:
+
+- Smooth out scrolling. Right now, scrolling only happens on orientation events, but those don’t come in often enough for nice, smooth animation. It would proably make sense to use `setTimeout` or `requestAnimationFrame`.
+- Make an icon
+- Make an options page with settings for sensitivity (the distance from the calibration point until scrolling starts) and acceleration
+- Fix a bug where if a page loads in a window’s frontmost tab but the window is not in front it will scroll along with the actual frontmost page. The problem here is that it’s tricky, as far as I know, to tell via normal APIs whether a page has focus. Might need to add `windows` and `tabs` permissions and use their apis to find of if the tab is in front.

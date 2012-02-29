@@ -1,0 +1,15 @@
+{
+	"name": "Tilt",
+	"version": "0.1",
+	"description": "Scroll web pages by moving your computer, not your mouse.",
+	"background_page": "background.html",
+	"browser_action": {},
+	"content_scripts": [
+		{
+			"matches": [ "<all_urls>" ],
+			"js": [ "content.js" ]
+		}
+	],
+	"permissions": [
+	]
+}
