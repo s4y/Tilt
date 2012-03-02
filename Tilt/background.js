@@ -30,8 +30,8 @@ function broadcast(message){
 // No error handling since this is only called when a tab connects
 function getActiveTab(callback){
 	chrome.windows.getCurrent(function(w){
-		chrome.tabs.query({ windowId: window.id, active: true }, function(tab){
-			callback(tab.id);
+		chrome.tabs.query({ windowId: w.id, active: true }, function(tab){
+			callback(tab[0].id);
 		});
 	});
 }
