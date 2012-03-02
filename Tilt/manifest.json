@@ -1,6 +1,6 @@
 {
 	"name": "Tilt",
-	"version": "0.1",
+	"version": "0.5",
 	"description": "Scroll web pages by moving your computer, not your mouse.",
 	"icons": {
 		"48": "icons/tilt-48.png",

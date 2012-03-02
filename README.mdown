@@ -4,10 +4,8 @@ Born at [Hacker School](http://www.hackerschool.com/)
 
 ## Scroll web pages without lifting a finger (lift your laptop instead)
 
-Tilt is a Chrome extension that lets you scoll web pages by tilting your accelerometer-equipped laptop forward and backward. It was inspired by the tilt scrolling feature of Instapaper (which I hear is also in Chrome for Android).
+Tilt is a Chrome extension that lets you scroll web pages by tilting your accelerometer-equipped laptop forward and backward. It was inspired by the tilt scrolling feature of Instapaper (which I hear is also in Chrome for Android).
 
 ## How’s it doing?
 
-Not bad, but not ready for prime time yet. Here’s my todo list:
-
-- Make an options page with settings for sensitivity (the distance from the calibration point until scrolling starts), acceleration, and smoothness
+Ready for release. I hope.
