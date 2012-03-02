@@ -2,7 +2,8 @@ var orientationBound = false,
 	focused = false,
 	active = false,
 	enabled = false,
-	calibration = 0;
+	calibration = 0,
+	samples = [0, 0, 0, 0];
 
 var scroller = {
 	rate: 0,
@@ -22,9 +23,12 @@ var scroller = {
 }
 
 function handleOrientation(e){
-	var tilt = e.beta - calibration, rate;
-	if(Math.abs(tilt) > 2){
-		rate = Math.pow(Math.abs(tilt) / 2, 1.5) * (tilt < 0 ? 1 : -1);
+	var tilt, rate;
+	samples.push(e.beta - calibration);
+	samples.shift();
+	tilt = samples.reduce(function(acc, n){ return acc + n; }, 0) / samples.length;
+	if(Math.abs(tilt) > 1){
+		rate = Math.pow(Math.abs(tilt), 1.5) * (tilt < 0 ? 1 : -1);
 		scroller.setSpeed(rate);
 	} else {
 		scroller.setSpeed(0);
@@ -53,6 +57,9 @@ function setActive(active){
 	} else if (orientationBound && !active) {
 		window.removeEventListener('deviceorientation', handleOrientation, false);
 		scroller.setSpeed(0);
+		for (var i = samples.length - 1; i >= 0; i--){
+			samples[i] = 0;
+		}
 		orientationBound = false;
 	}
 }
