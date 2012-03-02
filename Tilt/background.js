@@ -12,6 +12,10 @@ function calibrate(callback){
 	}, false);
 }
 
+function getConfig(){
+	return { deadZone: +localStorage.deadZone, smoothness: +localStorage.smoothness };
+}
+
 function updateBadge(){
 	chrome.browserAction.setIcon({ path: 'icons/tilt-19' + (enabled ? '-enabled' : '') + '.png' });
 	chrome.browserAction.setTitle({ title: 'Turn ' + (enabled ? 'off' : 'on') + ' tilt scrolling' });
@@ -38,8 +42,21 @@ chrome.browserAction.onClicked.addListener(function(){
 });
 chrome.extension.onConnect.addListener(function(port){
 	ports[port.sender.tab.id] = port;
-	port.postMessage({ active: port.tab.active, enabled: enabled, calibration: calibration });
+	port.postMessage({ active: port.tab.active, enabled: enabled, calibration: calibration, config: getConfig() });
 	port.onDisconnect.addListener(function(){
 		delete ports[port.sender.tab.id];
 	});
 });
+
+window.addEventListener('storage', function(e){
+	broadcast({ config: getConfig() });
+}, false);
+
+// Default options. I think this (populating localstorage)
+// is a shitty way of doing defaults, but it’ll work for now
+if (!('deadZone' in localStorage)){
+	localStorage.deadZone = 1.5;
+}
+if (!('smoothness' in localStorage)){
+	localStorage.smoothness = 4;
+}

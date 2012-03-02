@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Tilt &ndash; Options</title>
+	<style>
+		html{
+			background: #D6E7FF;
+			font: 14px "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
+		}
+		body{
+			width: 35em;
+			background: white;
+			border: 0.25em solid #222;
+			border-radius: 0.5em;
+			padding: 2em;
+			margin: 3em auto 0 auto;
+		}
+		h1{
+			margin: 0 0 1em 0;
+		}
+		a.action{
+			color: blue;
+			text-decoration: underline;
+			cursor: pointer;
+		}
+		a.action:active{
+			color: red;
+		}
+		dt{
+			float: left;
+			text-align: right;
+			font-weight: bold;
+			width: 8em;
+			margin-right: 1em;
+		}
+		dt::after{
+			content: ':';
+		}
+		dd{
+			margin: 1.5em 0;
+		}
+		dd>input{
+			width: 25em;
+		}
+		output{
+			vertical-align: top;
+			margin-left: 0.5em;
+		}
+	</style>
+</head>
+
+<body>
+<h1>Tilt options</h1>
+<dl>
+	<dt>Sensitivity</dt>
+	<dd><input id="sensitivity" type="range" min=0 max=10><output for="sensitivity"></output></dd>
+	<dt>Smoothness</dt>
+	<dd><input id="smoothness" type="range" min=1 max=10><output for="smoothness"></output></dd>
+</dl>
+<script>
+var sensitivity = document.getElementById('sensitivity'),
+	smoothness = document.getElementById('smoothness');
+sensitivity.addEventListener('input', function(){
+	localStorage.deadZone = 5 - (this.nextSibling.value = sensitivity.value) / 2;
+});
+sensitivity.nextSibling.value = sensitivity.value = (5 - +localStorage.deadZone) * 2
+
+smoothness.addEventListener('input', function(){
+	localStorage.smoothness = this.nextSibling.value = smoothness.value;
+});
+smoothness.nextSibling.value = smoothness.value = +localStorage.smoothness
+</script>
+</body>
+</html>

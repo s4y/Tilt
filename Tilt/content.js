@@ -3,6 +3,7 @@ var orientationBound = false,
 	active = false,
 	enabled = false,
 	calibration = 0,
+	config = null,
 	samples = [0, 0, 0, 0];
 
 var scroller = {
@@ -27,8 +28,8 @@ function handleOrientation(e){
 	samples.push(e.beta - calibration);
 	samples.shift();
 	tilt = samples.reduce(function(acc, n){ return acc + n; }, 0) / samples.length;
-	if(Math.abs(tilt) > 1){
-		rate = Math.pow(Math.abs(tilt), 1.5) * (tilt < 0 ? 1 : -1);
+	if(Math.abs(tilt) > config.deadZone){
+		rate = Math.pow(Math.abs(tilt) / (config.deadZone || 1), 1.5) * (tilt < 0 ? 1 : -1);
 		scroller.setSpeed(rate);
 	} else {
 		scroller.setSpeed(0);
@@ -67,6 +68,7 @@ function setActive(active){
 
 var port = chrome.extension.connect();
 port.onMessage.addListener(function(message){
+	var oldSamples, i, smoothness;
 	if (message.active){
 		handleFocus();
 	}
@@ -83,5 +85,20 @@ port.onMessage.addListener(function(message){
 			enabled = false;
 			setActive(false);
 		}
+	}
+	if ('config' in message){
+		if (!config || config.smoothness != message.config.smoothness) {
+			oldSamples = samples;
+			samples = [];
+			smoothness = message.config.smoothness;
+			for (i = 0; i < smoothness; i++){
+				if(oldSamples.length){
+					samples.unshift(oldSamples.pop());
+				} else {
+					samples.unshift(0);
+				}
+			}
+		}
+		config = message.config;
 	}
 });

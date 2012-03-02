@@ -6,6 +6,7 @@
 		"48": "icons/tilt-48.png",
 		"128": "icons/tilt-128.png"
 	},
+	"options_page": "options.html",
 	"background_page": "background.html",
 	"browser_action": {
 		"default_icon": "icons/tilt-19.png"
