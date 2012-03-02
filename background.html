@@ -10,7 +10,8 @@
 		}
 
 		function updateBadge(){
-			chrome.browserAction.setBadgeText({ text: enabled ? '' : 'OFF' });
+			chrome.browserAction.setIcon({ path: 'icons/tilt-19' + (enabled ? '-enabled' : '') + '.png' });
+			chrome.browserAction.setTitle({ title: 'Turn ' + (enabled ? 'off' : 'on') + ' tilt scrolling' });
 		}
 
 		function broadcast(message){

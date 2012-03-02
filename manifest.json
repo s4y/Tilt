@@ -8,7 +8,7 @@
 	},
 	"background_page": "background.html",
 	"browser_action": {
-		"default_icon": "icons/tilt-disabled-19.png"
+		"default_icon": "icons/tilt-19.png"
 	},
 	"content_scripts": [
 		{
