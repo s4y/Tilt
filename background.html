@@ -3,9 +3,15 @@
 	<script>
 		var enabled = false, calibration = 0, ports = {};
 		function calibrate(callback){
+			// Work around http://crbug.com/116546
+			var first = true;
 			window.addEventListener('deviceorientation', function handleCalibrate(e){
-				callback(e.beta);
-				window.removeEventListener('deviceorientation', handleCalibrate);
+				if (first) {
+					first = false;
+				} else {
+					callback(e.beta);
+					window.removeEventListener('deviceorientation', handleCalibrate);
+				}
 			}, false);
 		}
 
