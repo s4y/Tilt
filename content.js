@@ -4,11 +4,30 @@ var orientationBound = false,
 	enabled = false,
 	calibration = 0;
 
+var scroller = {
+	rate: 0,
+	interval: null,
+	tick: function(){
+		window.scrollBy(0, this.rate);
+	},
+	setSpeed: function(rate){
+		this.rate = rate;
+		if (rate === 0 && this.interval) {
+			clearInterval(this.interval);
+			this.interval = null;
+		} else if (rate !== 0 && !this.interval) {
+			this.interval = setInterval(this.tick.bind(this), 15);
+		}
+	}
+}
+
 function handleOrientation(e){
-	var tilt = e.beta - calibration, delta;
+	var tilt = e.beta - calibration, rate;
 	if(Math.abs(tilt) > 2){
-		delta = Math.pow(Math.abs(tilt) / 2, 2.5) * (tilt < 0 ? 1 : -1);
-		window.scrollBy(0, delta); 
+		rate = Math.pow(Math.abs(tilt) / 2, 1.5) * (tilt < 0 ? 1 : -1);
+		scroller.setSpeed(rate);
+	} else {
+		scroller.setSpeed(0);
 	}
 };
 
@@ -33,6 +52,7 @@ function setActive(active){
 		orientationBound = true;
 	} else if (orientationBound && !active) {
 		window.removeEventListener('deviceorientation', handleOrientation, false);
+		scroller.setSpeed(0);
 		orientationBound = false;
 	}
 }
