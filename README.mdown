@@ -11,4 +11,3 @@ Tilt is a Chrome extension that lets you scoll web pages by tilting your acceler
 Not bad, but not ready for prime time yet. Here’s my todo list:
 
 - Make an options page with settings for sensitivity (the distance from the calibration point until scrolling starts), acceleration, and smoothness
-- Fix a bug where if a page loads in a window’s frontmost tab but the window is not in front it will scroll along with the actual frontmost page. The problem here is that it’s tricky, as far as I know, to tell via normal APIs whether a page has focus. Might need to add `windows` and `tabs` permissions and use their apis to find of if the tab is in front.

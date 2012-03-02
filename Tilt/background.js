@@ -27,6 +27,15 @@ function broadcast(message){
 	}
 }
 
+// No error handling since this is only called when a tab connects
+function getActiveTab(callback){
+	chrome.windows.getCurrent(function(w){
+		chrome.tabs.query({ windowId: window.id, active: true }, function(tab){
+			callback(tab.id);
+		});
+	});
+}
+
 updateBadge();
 chrome.browserAction.onClicked.addListener(function(){
 	enabled = !enabled;
@@ -42,9 +51,11 @@ chrome.browserAction.onClicked.addListener(function(){
 });
 chrome.extension.onConnect.addListener(function(port){
 	ports[port.sender.tab.id] = port;
-	port.postMessage({ active: port.tab.active, enabled: enabled, calibration: calibration, config: getConfig() });
 	port.onDisconnect.addListener(function(){
 		delete ports[port.sender.tab.id];
+	});
+	getActiveTab(function(activeTab){
+		port.postMessage({ active: port.tab.id == activeTab, enabled: enabled, calibration: calibration, config: getConfig() });
 	});
 });
 

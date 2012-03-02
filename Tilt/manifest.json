@@ -17,6 +17,5 @@
 			"js": [ "content.js" ]
 		}
 	],
-	"permissions": [
-	]
+	"permissions": [ "tabs"	]
 }
