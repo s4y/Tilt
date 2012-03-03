@@ -8,15 +8,24 @@ var orientationBound = false,
 
 var scroller = {
 	rate: 0,
+	maxInterval: 60,
+	curInterval: null,
 	interval: null,
 	tick: function(){
 		window.scrollBy(0, this.rate);
 	},
 	setSpeed: function(rate){
+		var magnitude = Math.abs(rate);
 		this.rate = rate;
 		if (rate === 0 && this.interval) {
 			clearInterval(this.interval);
 			this.interval = null;
+		} else if (magnitude > 0 && magnitude < 1) {
+			if (this.interval){
+				clearInterval(this.interval);
+			}
+			this.rate = 1 * (rate < 0 ? -1 : 1);
+			this.interval = setInterval(this.tick.bind(this), 15 / magnitude);
 		} else if (rate !== 0 && !this.interval) {
 			this.interval = setInterval(this.tick.bind(this), 15);
 		}
@@ -29,7 +38,7 @@ function handleOrientation(e){
 	samples.shift();
 	tilt = samples.reduce(function(acc, n){ return acc + n; }, 0) / samples.length;
 	if(Math.abs(tilt) > config.deadZone){
-		rate = Math.pow(Math.abs(tilt) / (config.deadZone || 1), 1.5) * (tilt < 0 ? 1 : -1);
+		rate = Math.pow(Math.abs(tilt) - config.deadZone, 1.5) * (tilt < 0 ? 1 : -1);
 		scroller.setSpeed(rate);
 	} else {
 		scroller.setSpeed(0);
