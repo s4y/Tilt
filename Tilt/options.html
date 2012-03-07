@@ -82,12 +82,12 @@ var sensitivity = document.getElementById('sensitivity'),
 sensitivity.addEventListener('input', function(){
 	localStorage.deadZone = 5 - (this.nextSibling.value = sensitivity.value) / 2;
 });
-sensitivity.nextSibling.value = sensitivity.value = (5 - +localStorage.deadZone) * 2
+sensitivity.nextSibling.value = sensitivity.value = (5 - +localStorage.deadZone) * 2;
 
 smoothness.addEventListener('input', function(){
 	localStorage.smoothness = +(this.nextSibling.value = smoothness.value) + 1;
 });
-smoothness.nextSibling.value = smoothness.value = +localStorage.smoothness - 1
+smoothness.nextSibling.value = smoothness.value = +localStorage.smoothness - 1;
 
 inversion.addEventListener('change', function(){
 	localStorage.inversion = this.checked ? -1 : 1;
@@ -96,7 +96,7 @@ inversion.checked = localStorage.inversion;
 
 var backgroundPosition = 0;
 function scrollBy(x, y){
-	backgroundPosition = (backgroundPosition + -Math.floor(y)) % 200
+	backgroundPosition = (backgroundPosition + -Math.floor(y)) % 200;
 	document.documentElement.style.backgroundPosition = '0px ' + backgroundPosition + 'px';
 }
 </script>

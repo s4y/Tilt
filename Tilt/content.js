@@ -43,7 +43,7 @@ function handleOrientation(e){
 	} else {
 		scroller.setSpeed(0);
 	}
-};
+}
 
 function handleFocus(){
 	focused = true;
