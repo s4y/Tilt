@@ -67,6 +67,8 @@
 	<dd><input id="sensitivity" type="range" min=0 max=10><output for="sensitivity"></output></dd>
 	<dt>Smoothness</dt>
 	<dd><input id="smoothness" type="range" min=0 max=10><output for="smoothness"></output></dd>
+	<dt>Inverted</dt>
+	<dd><input id="inversion" type="checkbox"></dd>
 </dl>
 <p id="footer">
 Tilt by Sidney San Mart&iacute;n. <a href="https://github.com/Sidnicious/Tilt">Fork it on GitHub</a>.<br>
@@ -74,7 +76,9 @@ Questions or suggestions? <a href="mailto:hello+tilt@sidneysm.com">Email me</a>.
 </p>
 <script>
 var sensitivity = document.getElementById('sensitivity'),
-	smoothness = document.getElementById('smoothness');
+	smoothness = document.getElementById('smoothness'),
+	inversion = document.getElementById('inversion');
+
 sensitivity.addEventListener('input', function(){
 	localStorage.deadZone = 5 - (this.nextSibling.value = sensitivity.value) / 2;
 });
@@ -84,6 +88,11 @@ smoothness.addEventListener('input', function(){
 	localStorage.smoothness = +(this.nextSibling.value = smoothness.value) + 1;
 });
 smoothness.nextSibling.value = smoothness.value = +localStorage.smoothness - 1
+
+inversion.addEventListener('change', function(){
+	localStorage.inversion = this.checked ? -1 : 1;
+});
+inversion.checked = localStorage.inversion;
 
 var backgroundPosition = 0;
 function scrollBy(x, y){

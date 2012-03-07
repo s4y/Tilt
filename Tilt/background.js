@@ -13,7 +13,11 @@ function calibrate(callback){
 }
 
 function getConfig(){
-	return { deadZone: +localStorage.deadZone, smoothness: +localStorage.smoothness };
+	return {
+		deadZone: +localStorage.deadZone,
+		smoothness: +localStorage.smoothness,
+		inversion: +localStorage.inversion
+	};
 }
 
 function updateBadge(){
@@ -70,4 +74,7 @@ if (!('deadZone' in localStorage)){
 }
 if (!('smoothness' in localStorage)){
 	localStorage.smoothness = 4;
+}
+if (!('inversion' in localStorage)){
+	localStorage.inversion = 1;
 }
