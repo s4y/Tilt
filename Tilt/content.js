@@ -39,11 +39,11 @@ function handleOrientation(e){
 	tilt = samples.reduce(function(acc, n){ return acc + n; }, 0) / samples.length;
 	if(Math.abs(tilt) > config.deadZone){
 		rate = Math.pow(Math.abs(tilt) - config.deadZone, 1.5) * (tilt < 0 ? 1 : -1);
-		scroller.setSpeed(rate);
+		scroller.setSpeed(config.inversion * rate);
 	} else {
 		scroller.setSpeed(0);
 	}
-};
+}
 
 function handleFocus(){
 	focused = true;
