@@ -55,7 +55,7 @@ chrome.extension.onConnect.addListener(function(port){
 		delete ports[port.sender.tab.id];
 	});
 	getActiveTab(function(activeTab){
-		port.postMessage({ active: port.tab.id == activeTab, enabled: enabled, calibration: calibration, config: getConfig() });
+		port.postMessage({ active: port.sender.tab.id == activeTab, enabled: enabled, calibration: calibration, config: getConfig() });
 	});
 });
 
