@@ -11,6 +11,7 @@ var scroller = {
 	maxInterval: 60,
 	curInterval: null,
 	interval: null,
+	reducedSpeed: false,
 	tick: function(){
 		window.scrollBy(0, this.rate);
 	},
@@ -20,14 +21,20 @@ var scroller = {
 		if (rate === 0 && this.interval) {
 			clearInterval(this.interval);
 			this.interval = null;
+			this.reducedSpeed = false;
 		} else if (magnitude > 0 && magnitude < 1) {
 			if (this.interval){
 				clearInterval(this.interval);
 			}
 			this.rate = 1 * (rate < 0 ? -1 : 1);
 			this.interval = setInterval(this.tick.bind(this), 15 / magnitude);
-		} else if (rate !== 0 && !this.interval) {
+			this.reducedSpeed = true;
+		} else if (rate !== 0 && (!this.interval || this.reducedSpeed)) {
+			if (this.interval) {
+				clearInterval(this.interval);
+			}
 			this.interval = setInterval(this.tick.bind(this), 15);
+			this.reducedSpeed = false;
 		}
 	}
 }
